@@ -110,7 +110,32 @@ client.on("message", message => {
 
 
 
-
+client.on('message', message => {
+    var prefix = "$";
+     if(message.content === prefix + "mu") {
+     if(!message.channel.guild) return message.reply('** This command only for servers**');
+                    
+     if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply(' **__ليس لديك صلاحيات__**');
+         message.channel.overwritePermissions(message.guild.id, {
+         SEND_MESSAGES: false
+                    
+    }).then(() => {
+             message.reply("**__تم تقفيل الشات__ ✅ **")
+       });
+    }
+    if(message.content === prefix + "un") {
+    if(!message.channel.guild) return message.reply('** This command only for servers**');
+                    
+    if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('**__ليس لديك صلاحيات__**');
+        message.channel.overwritePermissions(message.guild.id, {
+        SEND_MESSAGES: true
+                    
+         }).then(() => {
+          message.reply("**__تم فتح الشات__✅**")
+      });
+  }
+                           
+});
 
 
 
