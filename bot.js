@@ -326,5 +326,14 @@ client.on('message', message => {
 
 
 
-
+client.on('message', message => {
+    if(message.content.toLowerCase().startsWith(`discord.gg`)){
+        message.member.addRole(message.guild.roles.find('name', 'Muted'));
+        var embed = new Discord.RichEmbed()
+        .setDescription(`تمت معاقبتك لنشرك سيرفر اخر هنا`)
+            message.delete();
+        message.channel.send(`<@${message.author.id}`);
+        message.channel.send({embed});
+    }
+});
 
