@@ -355,3 +355,35 @@ message.channel.send("``لا تستطيع سحب "+ message.mentions.members.fir
 } else {
 message.react("❌")
  }}});
+
+
+
+
+
+const  adminprefix  =  " $ " ؛
+const  devs  = [ ' 394972648217772033 ' ، ' ' ]؛
+العميل . على ( ' message ' ، message  => {
+  var argresult =  message . محتوى . انقسام ( `  ` ). شريحة ( 1 ). انضمام ( '  ' )؛
+    اذا ( ! devs . تتضمن ( message . author . id )) return ؛
+    
+إذا كان ( message . content . يبدأ بـ (adminprefix +  ' بلاي ' )) {
+  العميل . المستخدم . setGame (argresult)؛
+    رسالة . قناة . sendMessage ( ` ** $ { argresult } تم تغيير بلاينق البوت إلى ** ` )
+} آخر 
+  إذا كان ( message . content . يبدأ بـ (adminprefix +  ' نيم ' )) {
+العميل . المستخدم . setUsername (argresult). ثم
+    رسالة . قناة . sendMessage ( ` ** $ { argresult } **: تم تغيير أسم البوت إلى ` )
+ رسالة العودة . الرد ( " ** لا يمكن تغيير الاسم يجب عليك الانتظآر لمدة ساعتين. ** " )؛
+} آخر
+  إذا كان ( message . content . تبدأ (adminprefix +  ' افتار ' )) {
+العميل . المستخدم . setAvatar (argresult)؛
+  رسالة . قناة . sendMessage ( ` ** $ { argresult } **: تم تغير صورة البوت ` )؛
+      } آخر     
+إذا كان ( message . content . يبدأ بـ (adminprefix +  ' ستريم ' )) {
+  العميل . المستخدم . setGame (argresult، " https://www.twitch.tv/idk " )؛ // wennnn
+    رسالة . قناة . sendMessage ( ` ** تم تغيير تويتش البوت إلى   $ { argresult } ** ` )
+}
+})؛
+
+
+
