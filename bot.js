@@ -61,14 +61,29 @@ client.on('message', message => {
 
 
 
-client.on('message', async message => {
-  let args = message.content.slice(3);
-  if(message.content.startsWith(prefix + 'bc')) {
-    if(!message.guild.members.get(message.author.id).hasPermission('ADMINISTRATOR')) return message.channel.send('Required Administrator Permission')
-       message.guild.members.forEach(m => {
-      
-      m.send(args.replace('[user]', m).replace('[server]', m.guild.name).replace('[sender]', message.author.username))
-    })
-  }
-})
+client.on("message", (message) => {
+                        if (message.content.startsWith("ch")) {
+                                    if (!message.member.hasPermission('MANAGE_CHANNELS')) return message.reply("You Don't Have `MANAGE_CHANNELS` Premissions ");
+                                let args = message.content.split(" ").slice(1);
+                            message.guild.createChannel(args.join(' '), 'text');
+                            message.channel.sendMessage('تـم إنـشاء روم كتابي')
+                            
+                        }
+                        });
+
+
+
+client.on("message", (message) => {
+                        if (message.content.startsWith("cv")) {
+                                    if (!message.member.hasPermission('MANAGE_CHANNELS')) return message.reply("You Don't Have `MANAGE_CHANNELS` Premissions ");
+                                let args = message.content.split(" ").slice(1);
+                            message.guild.createChannel(args.join(' '), 'voice');
+                            message.channel.sendMessage('تـم إنـشاء روم صـوتي')
+                            
+                        }
+                        });
+
+
+
+
 
