@@ -284,7 +284,6 @@ if(!message.channel.guild) return message.reply(' Error : \` Guild Command \`');
 
 
 
-
 client.on('message', message => {
             let args = message.content.split(' ').slice(1);
             if(message.content.split(' ')[0] == `${prefix}لون`){
@@ -314,14 +313,21 @@ client.on('message', message => {
                let ecount = 0;
             for(let x = 1; x < 201; x++){
            
-            message.member.removeRole(message.guild.roles.find("name",`${x}`))
+            message.member.removeRole(message.guild.roles.find("bot",`${x}`))
            
             }
-             message.member.addRole(message.guild.roles.find("name",`${args}`));
+             message.member.addRole(message.guild.roles.find("bot",`${args}`));
            
            
             }
             });
+
+
+
+
+
+
+
 
 
 client.on('message', message => {
