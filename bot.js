@@ -225,33 +225,37 @@ if (message.content.startsWith(adminprefix + 'ستريم')) {
 
 
 
-client.on('message', message => {
-     if(message.content.startsWith(prefix + "مسح")) {
-         var args = message.content.split(" ").slice(1);
- if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('You need MANAGE_MESSAGES permission noob');
-  if (!args[0]) return message.channel.send('You didn't provide any number!!!');
 
-  message.channel.bulkDelete(args[0]).then(() => {
-    const embed = new Discord.RichEmbed()
-      .setColor(0xF16104)
-      .setDescription(Cleared ${args[0]} messages.);
-    message.channel.send({ embed });
 
-    const actionlog = message.guild.channels.find('log', 'logs');
 
-    if (!actionlog) return message.channel.send('Can't find action-log channel. Are you sure that this channel exists and I have permission to view it? CANNOT POST LOG.');
-    const embedlog = new Discord.RichEmbed()
-      .setDescription('~Purge~')
-      .setColor(0xF16104)
-      .addField('Purged By', <@${message.author.id}> with ID ${message.author.id})
-      .addField('Purged in', message.channel)
-      .addField('Time', message.createdAt);
-    actionlog.send(embedlog);
-   
+
+const invites = {};
+
+const wait = require('util').promisify(setTimeout);
+
+client.on('ready', () => {
+  wait(1000);
+
+  client.guilds.forEach(g => {
+    g.fetchInvites().then(guildInvites => {
+      invites[g.id] = guildInvites;
+    });
   });
-};
-
 });
+
+client.on('guildMemberAdd', member => {
+  member.guild.fetchInvites().then(guildInvites => {
+    const ei = invites[member.guild.id];
+    invites[member.guild.id] = guildInvites;
+    const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
+    const inviter = client.users.get(invite.inviter.id);
+    const logChannel = member.guild.channels.find(channel => channel.name === "smg");
+    logChannel.send(`${member} Invited by: <@${inviter.id}>`);
+  });
+});
+
+
+
 
 
        
