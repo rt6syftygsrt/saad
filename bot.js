@@ -26,27 +26,6 @@ client.user.setGame(``,'https://www.twitch.tv/tarikrs');                        
 
 
 
-	  
-	  client.on('message', message => {
-    if (!message.guild) return;
-    if (message.content.startsWith("رابط")) {
-
-        message.channel.createInvite({
-        thing: true,
-        maxUses: 5,
-        maxAge: 86400
-    }).then(invite =>
-      message.author.sendMessage(invite.url)
-    )
-  message.channel.send(`** تم أرسال الرابط برسالة خاصة **`)
-
-      message.author.send(`**مدة الرابط : يـوم
- عدد استخدامات الرابط : 5 **`)
-    }
-});
-
-
-
 
 
 client.on("message", (message) => {
@@ -238,10 +217,10 @@ client.on('guildMemberAdd', member => {
     const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
     const inviter = client.users.get(invite.inviter.id);
     const logChannel = member.guild.channels.find(channel => channel.name === "smg");
-    logChannel.send(`${member} Invited by: <@${inviter.id}>`);
-  });
-});
-
+    logChannel.send( Invited:`${member}
+by: <@${inviter.id}>`);
+  });         
+     });
 
 
 
@@ -342,6 +321,31 @@ client.on("guildMemberAdd", member => {
   انت العضو رقم ${member.guild.memberCount} `) 
   }).catch(console.error)
   })
+
+
+
+client.on('guildMemberAdd', member => {
+
+    const channel = member.guild.channels.find('smg', '・text');
+  
+    const millis = new Date().getTime() - member.user.createdAt.getTime();
+    const now = new Date();
+    const createdAt = millis / 1000 / 60 / 60 / 24;
+
+
+
+
+  
+    const embed = new Discord.RichEmbed()
+    
+    .setColor("black")
+    .setDescription(`**تاريخ دخولك للدسكورد منذ ${createdAt.toFixed(0)} يوم**`)
+    .setAuthor(member.user.tag, member.user.avatarURL);
+    channel.sendEmbed(embed);
+
+  
+});
+
 
 
 
