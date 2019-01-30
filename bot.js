@@ -28,47 +28,57 @@ client.user.setGame(``,'https://www.twitch.tv/tarikrs');                        
 
 
 
-let rab6 = JSON.parse(fs.readFileSync('./rab6.json' , 'utf8'));
 client.on('message', message => {
-if(message.content.startsWith(prefix + "toggleLink")) {
-if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
-if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
-if(!rab6[message.guild.id]) rab6[message.guild.id] = {
-onoff: 'Off'
+let prefix = ' $';
+if(message.content.startsWith(prefix + "اسكت")){
+let muteduser = message.mentions.members.first();
+let jif = message.content.split(' ').slice(1);
+let durration = jif[1];
+let reason = message.content.split(' ').slice(3).join(' ');
+let hh;
+let muted = message.guild.roles.find(r => r.name === 'Muted');
+if(!muteduser){
+return message.channel.send('**#- I cannot find this guy**');
 }
-if(rab6[message.guild.id].onoff === 'Off') return [message.channel.send(`**✅ The Invite Link Cmd Is __𝐎𝐍__ !**`), rab6[message.guild.id].onoff = 'On']
-if(rab6[message.guild.id].onoff === 'On') return [message.channel.send(`**⛔ The Invite Link Cmd Is __𝐎𝐅𝐅__ !**`), rab6[message.guild.id].onoff = 'Off']
-fs.writeFile("./rab6.json", JSON.stringify(rab6), (err) => {
-if (err) console.error(err)
-.catch(err => {
-console.error(err);
+if(!message.guild.me.hasPermission('ADMINISTRATOR')){
+return message.channel.send(`**#- I must have the \`ADMINISTRATOR\` Perms so i can mute people**`);
+}
+if(muteduser.hasPermission('ADMINISTRATOR')) {
+return message.channel.send(`**#- He has a \`ADMINISTRATOR\` Perms and u cannot mute him**`);
+}
+if(!message.member.hasPermission('ADMINISTRATOR')){
+return message.channel.send('**#- You must have \`ADMINISTRATOR\` Perms.**');
+}
+if(muteduser.id === message.author.id){
+return message.channel.send(`**#- You can't mute yourself**`);
+}
+if(durration && !durration.match(/[1,10][s,m,h,d,w]/g)){
+return message.channel.send('**#- Submit a right durration. \n Must be like the following submitation : 1-10 s = second , m = minute , h = hour , d = days, w = weeks**');
+}
+if(!muted){
+return message.guild.createRole({name: 'Muted'});
+}
+if(!reason){
+hh = null;
+} else {
+hh = reason;
+}
+if(hh === null){
+hh = "No reason detected";
+}
+message.channel.send(`**${muteduser} Got muted ✅ \n Durration : ${durration}\n Reason : ${hh}**`);
+console.log(mms(durration));
+message.guild.channels.filter(m => m.type === 'text').forEach(f => { f.overwritePermissions(muted, {
+SEND_MESSAGES: false
 });
 });
-}
-})
-const coolDown = new Set();
-client.on('message', message => {
-if (message.content.startsWith("ﺭﺍﺑﻂ ")) {
-if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
-if(!rab6[message.guild.id]) rab6[message.guild.id] = {
-onoff: 'Off'
-}
-if(rab6[message.guild.id].onoff === 'Off') return;
-if(coolDown.has(message.author.id)) return message.channel.send(`**⏱ | ${message.author.username}, your invite 💴 link refreshes in \`\`1 Day\`\`.**`);
-message.channel.createInvite({
-thing: true,
-maxUses: 5,
-maxAge: 86400
-}).then(invite =>
-message.author.sendMessage(invite.url)
-)
-message.channel.send("** ﺗﻢ ﺍﺭﺳﺎﻝ ﺍﻟﺮﺍﺑﻂ ﺑﺮﺳﺎﻟﺔ ﺧﺎﺻﺔ **") .then(() => {
-coolDown.add(message.author.id);
+message.guild.channels.filter(s => s.type === 'voice').forEach(h => { h.overwritePermissions(muted, {
+SPEAK: false
 });
-message.author.send(`** ﻣﺪﺓ ﺍﻟﺮﺍﺑﻂ : ﻳـﻮﻡ
-ﻋﺪﺩ ﺍﺳﺘﺨﺪﺍﻣﺎﺕ ﺍﻟﺮﺍﺑﻂ : 5 **`)
+});
+muteduser.addRole(muted).then(setTimeout(() => {
+muteduser.removeRole(muted);
+message.channel.send(`**${muteduser} Finally got unmuted ✅**`);
+}, mms(durration)));
 }
-setTimeout(() => {
-coolDown.remove(message.author.id);
-},86400000);
 });
