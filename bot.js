@@ -51,7 +51,7 @@ client.on("message", (message) => {
 
 
 
-const replyForMention = [    "ايش تبي",    "سوي +help",    "احد ناداني؟",    "سم؟",    "كيفك",    "تمنشن بوت ياغبي؟",    "لا تزعجني",    "هلا"]
+const replyForMention = [تمنشن بوت ياغبي؟" "]
 client.on('message', message=> {
     if (message.author.bot) return;
     if (message.isMentioned(client.user))
