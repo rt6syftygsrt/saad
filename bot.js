@@ -715,47 +715,235 @@ client.on("message", message => {
 });
 
 
-
-const mmss = require('ms');
-client.on('message', async message => {
-let muteReason = message.content.split(" ").slice(3).join(" ");
-let mutePerson = message.mentions.users.first();
-let messageArray = message.content.split(" ");
-let muteRole = message.guild.roles.find("name", "Muted");
-let time = messageArray[2];
-if(message.content.startsWith(prefix + "tempmute")) {
-  if(!
-('MUTE_MEMBERS')) return message.channel.send('**Sorry But You Dont Have Permission** `MUTE_MEMBERS`' );
-if(!mutePerson) return message.channel.send('**Mention Someone**')
-if(mutePerson === message.author) return message.channel.send('**You Cant Mute Yourself**');
-if(mutePerson === client.user) return message.channel.send('**You Cant Mute The Bot**');
-if(message.guild.member(mutePerson).roles.has(muteRole.id)) return message.channel.send('**This Person Already Tempmuted !**');
-if(!muteRole) return message.guild.createRole({ name: "Muted", permissions: [] });
-if(!time) return message.channel.send("**Type The Duration**");
-if(!time.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**The Bot Not Support This Time**');
-if(!muteReason) return message.channel.send('Please Type The Reason')
-message.guild.member(mutePerson).addRole(muteRole);
-message.channel.send(`**✅ ${mutePerson} has been muted ! 🤐 **`)
-message.delete()
-let muteEmbed = new Discord.RichEmbed()
-.setTitle(`New Temp Muted User`)
-.setThumbnail(message.guild.iconURL)
-.addField('- Muted By:',message.author,true)
-.addField('- Muted User:', `${mutePerson}`)
-.addField('- Reason:',muteReason,true)
-.addField('- Duration:',`${mmss(mmss(time), {long: true})}`)
-.setFooter(message.author.username,message.author.avatarURL);
-let incidentchannel = message.guild.channels.find(`name`, `incidents`);
-if(!incidentchannel) return message.channel.send("Cant Find incidents Channel");
-incidentchannel.sendEmbed(muteEmbed)
-mutePerson.send(`**You Are has been temp muted in ${message.guild.name} reason: ${muteReason}**`)
-.then(() => { setTimeout(() => {
-message.guild.member(mutePerson).removeRole(muteRole);
-}, mmss(time));
+// Guild Logs
+client.on('guildBanAdd', (guild, user) => {
+ 
+    if(!guild.member(client.user).hasPermission('EMBED_LINKS')) return;
+    if(!guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
+ 
+    var logChannel = guild.channels.find(c => c.name === 'log');
+    if(!logChannel) return;
+ 
+    guild.fetchAuditLogs().then(logs => {
+        var userID = logs.entries.first().executor.id;
+        var userAvatar = logs.entries.first().executor.avatarURL;
+ 
+        if(userID === client.user.id) return;
+ 
+        let banInfo = new Discord.RichEmbed()
+        .setTitle('**[BANNED]**')
+        .setThumbnail(userAvatar)
+        .setColor('DARK_RED')
+        .setDescription(`**\n**:airplane: Successfully \`\`BANNED\`\` **${user.username}** From the server!\n\n**User:** <@${user.id}> (ID: ${user.id})\n**By:** <@${userID}> (ID: ${userID})`)
+        .setTimestamp()
+        .setFooter(guild.name, guild.iconURL)
+ 
+        logChannel.send(banInfo);
+    })
 });
+client.on('guildBanRemove', (guild, user) => {
+    if(!guild.member(client.user).hasPermission('EMBED_LINKS')) return;
+    if(!guild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
+ 
+    var logChannel = guild.channels.find(c => c.name === 'log');
+    if(!logChannel) return;
+ 
+    guild.fetchAuditLogs().then(logs => {
+        var userID = logs.entries.first().executor.id;
+        var userAvatar = logs.entries.first().executor.avatarURL;
+ 
+        let unBanInfo = new Discord.RichEmbed()
+        .setTitle('**[UNBANNED]**')
+        .setThumbnail(userAvatar)
+        .setColor('GREEN')
+        .setDescription(`**\n**:unlock: Successfully \`\`UNBANNED\`\` **${user.username}** From the server\n\n**User:** <@${user.id}> (ID: ${user.id})\n**By:** <@${userID}> (ID: ${userID})`)
+        .setTimestamp()
+        .setFooter(guild.name, guild.iconURL)
+ 
+        logChannel.send(unBanInfo);
+    })
+});
+client.on('guildUpdate', (oldGuild, newGuild) => {
+ 
+    if(!oldGuild.member(client.user).hasPermission('EMBED_LINKS')) return;
+    if(!oldGuild.member(client.user).hasPermission('VIEW_AUDIT_LOG')) return;
+ 
+    var logChannel = oldGuild.channels.find(c => c.id === guildSettings[oldGuild.id].logChannel);
+    if(!logChannel) return;
+ 
+    oldGuild.fetchAuditLogs().then(logs => {
+        var userID = logs.entries.first().executor.id;
+        var userAvatar = logs.entries.first().executor.avatarURL;
+ 
+        if(oldGuild.name !== newGuild.name) {
+            let guildName = new Discord.RichEmbed()
+            .setTitle('**[CHANGE GUILD NAME]**')
+            .setThumbnail(userAvatar)
+            .setColor('BLUE')
+            .setDescription(`**\n**:white_check_mark: Successfully \`\`EDITED\`\` The guild name.\n\n**Old Name:** \`\`${oldGuild.name}\`\`\n**New Name:** \`\`${newGuild.name}\`\`\n**By:** <@${userID}> (ID: ${userID})`)
+            .setTimestamp()
+            .setFooter(newGuild.name, oldGuild.iconURL)
+ 
+            logChannel.send(guildName)
+        }
+        if(oldGuild.region !== newGuild.region) {
+            let guildRegion = new Discord.RichEmbed()
+            .setTitle('**[CHANGE GUILD REGION]**')
+            .setThumbnail(userAvatar)
+            .setColor('BLUE')
+            .setDescription(`**\n**:white_check_mark: Successfully \`\`EDITED\`\` The guild region.\n\n**Old Region:** ${oldGuild.region}\n**New Region:** ${newGuild.region}\n**By:** <@${userID}> (ID: ${userID})`)
+            .setTimestamp()
+            .setFooter(oldGuild.name, oldGuild.iconURL)
+ 
+            logChannel.send(guildRegion);
+        }
+        if(oldGuild.verificationLevel !== newGuild.verificationLevel) {
+            if(oldGuild.verificationLevel === 0) {
+                var oldVerLvl = 'Very Easy';
+            }else
+            if(oldGuild.verificationLevel === 1) {
+                var oldVerLvl = 'Easy';
+            }else
+            if(oldGuild.verificationLevel === 2) {
+                var oldVerLvl = 'Medium';
+            }else
+            if(oldGuild.verificationLevel === 3) {
+                var oldVerLvl = 'Hard';
+            }else
+            if(oldGuild.verificationLevel === 4) {
+                var oldVerLvl = 'Very Hard';
+            }
+ 
+            if(newGuild.verificationLevel === 0) {
+                var newVerLvl = 'Very Easy';
+            }else
+            if(newGuild.verificationLevel === 1) {
+                var newVerLvl = 'Easy';
+            }else
+            if(newGuild.verificationLevel === 2) {
+                var newVerLvl = 'Medium';
+            }else
+            if(newGuild.verificationLevel === 3) {
+                var newVerLvl = 'Hard';
+            }else
+            if(newGuild.verificationLevel === 4) {
+                var newVerLvl = 'Very Hard';
+            }
+ 
+            let verLog = new Discord.RichEmbed()
+            .setTitle('**[GUILD VERIFICATION LEVEL CHANGE]**')
+            .setThumbnail(userAvatar)
+            .setColor('BLUE')
+            .setDescription(`**\n**:white_check_mark: Successfully \`\`EDITED\`\` Guild verification level.\n\n**Old Verification Level:** ${oldVerLvl}\n**New Verification Level:** ${newVerLvl}\n**By:** <@${userID}> (ID: ${userID})`)
+            .setTimestamp()
+            .setFooter(oldGuild.name, oldGuild.iconURL)
+ 
+            logChannel.send(verLog);
+        }
+    })
+});
+client.on('guildMemberUpdate', (oldMember, newMember) => {
+    var logChannel = oldMember.guild.channels.find(c => c.name === 'log');
+    if(!logChannel) return;
+ 
+    oldMember.guild.fetchAuditLogs().then(logs => {
+        var userID = logs.entries.first().executor.id;
+        var userAvatar = logs.entries.first().executor.avatarURL;
+        var userTag = logs.entries.first().executor.tag;
+ 
+        if(oldMember.nickname !== newMember.nickname) {
+            if(oldMember.nickname === null) {
+                var oldNM = '\`\`اسمه الاصلي\`\`';
+            }else {
+                var oldNM = oldMember.nickname;
+            }
+            if(newMember.nickname === null) {
+                var newNM = '\`\`اسمه الاصلي\`\`';
+            }else {
+                var newNM = newMember.nickname;
+            }
+ 
+            let updateNickname = new Discord.RichEmbed()
+            .setTitle('**[UPDATE MEMBER NICKNAME]**')
+            .setThumbnail(userAvatar)
+            .setColor('BLUE')
+            .setDescription(`**\n**:spy: Successfully \`\`CHANGE\`\` Member Nickname.\n\n**User:** ${oldMember} (ID: ${oldMember.id})\n**Old Nickname:** ${oldNM}\n**New Nickname:** ${newNM}\n**By:** <@${userID}> (ID: ${userID})`)
+            .setTimestamp()
+            .setFooter(oldMember.guild.name, oldMember.guild.iconURL)
+ 
+            logChannel.send(updateNickname);
+        }
+        if(oldMember.roles.size < newMember.roles.size) {
+            let role = newMember.roles.filter(r => !oldMember.roles.has(r.id)).first();
+ 
+            let roleAdded = new Discord.RichEmbed()
+            .setTitle('**[ADDED ROLE TO MEMBER]**')
+            .setThumbnail(oldMember.guild.iconURL)
+            .setColor('GREEN')
+            .setDescription(`**\n**:white_check_mark: Successfully \`\`ADDED\`\` Role to **${oldMember.user.username}**\n\n**User:** <@${oldMember.id}> (ID: ${oldMember.user.id})\n**Role:** \`\`${role.name}\`\` (ID: ${role.id})\n**By:** <@${userID}> (ID: ${userID})`)
+            .setTimestamp()
+            .setFooter(userTag, userAvatar)
+ 
+            logChannel.send(roleAdded);
+        }
+        if(oldMember.roles.size > newMember.roles.size) {
+            let role = oldMember.roles.filter(r => !newMember.roles.has(r.id)).first();
+ 
+            let roleRemoved = new Discord.RichEmbed()
+            .setTitle('**[REMOVED ROLE FROM MEMBER]**')
+            .setThumbnail(oldMember.guild.iconURL)
+            .setColor('RED')
+            .setDescription(`**\n**:negative_squared_cross_mark: Successfully \`\`REMOVED\`\` Role from **${oldMember.user.username}**\n\n**User:** <@${oldMember.user.id}> (ID: ${oldMember.id})\n**Role:** \`\`${role.name}\`\` (ID: ${role.id})\n**By:** <@${userID}> (ID: ${userID})`)
+            .setTimestamp()
+            .setFooter(userTag, userAvatar)
+ 
+            logChannel.send(roleRemoved);
+        }
+    })
+    if(oldMember.guild.owner.user.id !== newMember.guild.owner.user.id) {
+        let newOwner = new Discord.RichEmbed()
+        .setTitle('**[UPDATE GUILD OWNER]**')
+        .setThumbnail(oldMember.guild.iconURL)
+        .setColor('GREEN')
+        .setDescription(`**\n**:white_check_mark: Successfully \`\`TRANSFER\`\` The Owner Ship.\n\n**Old Owner:** <@${oldMember.user.id}> (ID: ${oldMember.user.id})\n**New Owner:** <@${newMember.user.id}> (ID: ${newMember.user.id})`)
+        .setTimestamp()
+        .setFooter(oldMember.guild.name, oldMember.guild.iconURL)
+ 
+        logChannel.send(newOwner);
+    }
+});
+client.on('guildMemberAdd', member => {
+  var logChannel = member.guild.channels.find(c => c.name === 'log');
+  if(!logChannel) return;
+ 
+  let newMember = new Discord.RichEmbed()
+  .setTitle('**[NEW MEMBER ADDED]**')
+  .setThumbnail(member.user.avatarURL)
+  .setColor('GREEN')
+  .setDescription(`**\n**:arrow_lower_right: Joined **${member.user.username}** To the server!\n\n**User:** <@${member.user.id}> (ID: ${member.user.id})\n**Days In Discord:** ${Days(member.user.createdAt)}`)
+  .setTimestamp()
+  .setFooter(member.user.tag, member.user.avatarURL)
+ 
+  logChannel.send(newMember);
+});
+function Days(date) {
+    let now = new Date();
+    let diff = now.getTime() - date.getTime();
+    let days = Math.floor(diff / 86400000);
+    return days + (days == 1 ? " day" : " days") + " ago";
 }
+client.on('guildMemberRemove', member => {
+  var logChannel = member.guild.channels.find(c => c.name === 'log');
+  if(!logChannel) return;
+ 
+  let leaveMember = new Discord.RichEmbed()
+  .setTitle('**[LEAVE MEMBER]**')
+  .setThumbnail(member.user.avatarURL)
+  .setColor('GREEN')
+  .setDescription(`**\n**:arrow_upper_left: Leave **${member.user.username}** From the server.\n\n**User:** <@${member.user.id}> (ID: ${member.user.id})`)
+  .setTimestamp()
+  .setFooter(member.user.tag, member.user.avatarURL)
+ 
+  logChannel.send(leaveMember);
 });
-
-
-
 
