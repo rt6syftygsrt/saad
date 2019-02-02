@@ -853,7 +853,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
             .setTimestamp()
             .setFooter(userTag, userAvatar)
  
-            logChannel.send(roleAdded);
+            
         }
         if(oldMember.roles.size > newMember.roles.size) {
             let role = oldMember.roles.filter(r => !newMember.roles.has(r.id)).first();
