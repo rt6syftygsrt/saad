@@ -1048,8 +1048,8 @@ client.on('roleCreate', role => {
     if(!logChannel) return;
  
     role.guild.fetchAuditLogs().then(logs => {
-        var userID = 
-        var userAvatar = 
+        var userID = logs.entries.first().executor.id;
+        var userAvatar = logs.entries.first().executor.avatarURL;
  
         let roleCreate = new Discord.RichEmbed()
         .setTitle('تم انشاء رتبه')
@@ -1075,7 +1075,7 @@ client.on('roleDelete', role => {
         var userAvatar = logs.entries.first().executor.avatarURL;
  
         let roleDelete = new Discord.RichEmbed()
-        .setTitle('**[ROLE DELETE]**')
+        .setTitle('تم حذف رتبه')
         .setThumbnail(userAvatar)
         .setDescription(`**\n**:white_check_mark: Successfully \`\`DELETE\`\` Role.\n\n**Role Name:** \`\`${role.name}\`\` (ID: ${role.id})\n**By:** <@${userID}> (ID: ${userID})`)
         .setColor('RED')
