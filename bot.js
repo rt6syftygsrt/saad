@@ -1146,33 +1146,27 @@ client.on('roleUpdate', (oldRole, newRole) => {
 
 
 
-
-const sWlc = require('./welc.json');
+const sWlc = {}
 client.on('message', message => {
-var prefix = "#";
-    let newChannel = message.content.split(' ').slice(1).join(" ")
-
+var prefix = "!";
 if(message.channel.type === "dm") return;
 if(message.author.bot) return;
   if(!sWlc[message.guild.id]) sWlc[message.guild.id] = {
-    channel: newChannel
+    channel: "welcome"
 }
-  fs.writeFile("./welc.json", JSON.stringify(sWlc, null, 2), (err) => {
-      if(err) console.log(err)
-    });
 const channel = sWlc[message.guild.id].channel
   if (message.content.startsWith(prefix + "setwelcomer")) {
     if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
     let newChannel = message.content.split(' ').slice(1).join(" ")
     if(!newChannel) return message.reply(`**${prefix}setwelcomer <channel name>**`)
     sWlc[message.guild.id].channel = newChannel
-    
     message.channel.send(`**${message.guild.name}'s channel has been changed to ${newChannel}**`);
   }
 });
+
 client.on("guildMemberAdd", member => {
       if(!sWlc[member.guild.id]) sWlc[member.guild.id] = {
-    channel: ""
+    channel: "welcome"
   }
   const channel = sWlc[member.guild.id].channel
     const sChannel = sWlc[member.guild.id].channel
@@ -1194,6 +1188,7 @@ client.on("guildMemberAdd", member => {
       var Canvas = require('canvas')
       var jimp = require('jimp')
      const w = ['swlc.png'];
+      
               let Image = Canvas.Image,
                   canvas = new Canvas(557, 241),
                   ctx = canvas.getContext('2d');
@@ -1247,4 +1242,3 @@ client.on("guildMemberAdd", member => {
       
       }
       });
-
