@@ -845,7 +845,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
             let role = newMember.roles.filter(r => !oldMember.roles.has(r.id)).first();
  
             let roleAdded = new Discord.RichEmbed()
-            .setTitle('**[ADDED ROLE TO MEMBER]**')
+            .setTitle('تم اعطاء رتبه')
             .setThumbnail(oldMember.guild.iconURL)
             .setColor('GREEN')
             .setDescription(`**\n**:white_check_mark: Successfully \`\`ADDED\`\` Role to **${oldMember.user.username}**\n\n**User:** <@${oldMember.id}> \n**Role:** \`\`${role.name}\`\` \n**By:** <@${userID}> `)
@@ -858,7 +858,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
             let role = oldMember.roles.filter(r => !newMember.roles.has(r.id)).first();
  
             let roleRemoved = new Discord.RichEmbed()
-            .setTitle('تم اعطاء رتبه')
+            .setTitle('تم ازالة رتبه')
             .setThumbnail(oldMember.guild.iconURL)
             .setColor('RED')
             .setDescription(`**\n**:negative_squared_cross_mark: Successfully \`\`REMOVED\`\` Role from **${oldMember.user.username}**\n\n**User:** <@${oldMember.user.id}>\n**Role:** \`\`${role.name}\`\`\n**By:** <@${userID}> `)
