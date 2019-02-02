@@ -1143,6 +1143,10 @@ client.on('roleUpdate', (oldRole, newRole) => {
 });
  
 
+
+
+
+
 const sWlc = require('./welc.json');
 client.on('message', message => {
 var prefix = "#";
@@ -1190,8 +1194,6 @@ client.on("guildMemberAdd", member => {
       var Canvas = require('canvas')
       var jimp = require('jimp')
      const w = ['swlc.png'];
-
-
               let Image = Canvas.Image,
                   canvas = new Canvas(557, 241),
                   ctx = canvas.getContext('2d');
@@ -1222,8 +1224,6 @@ client.on("guildMemberAdd", member => {
                               ctx.fillStyle = "#FFFFFF";
       ctx.fillText(`welcome to server`, 245, 80);
     
-NEW MESSAGES
-ᴶᴺ | USFToday at 8:17 PM
                               //AVATARً
                               let Avatar = Canvas.Image;
                               let ava = new Avatar;
@@ -1247,3 +1247,4 @@ NEW MESSAGES
       
       }
       });
+
