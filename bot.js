@@ -51,14 +51,6 @@ client.on("message", (message) => {
 
 
 
-const replyForMention = [تمنشن بوت ياغبي؟" "]
-client.on('message', message=> {
-    if (message.author.bot) return;
-    if (message.isMentioned(client.user))
-    {
-    message.reply(replyForMention);
-    }
-});
 
 
 
@@ -1028,7 +1020,7 @@ client.on('channelUpdate', (oldChannel, newChannel) => {
         }
         if(oldChannel.topic !== newChannel.topic) {
             let newTopic = new Discord.RichEmbed()
-            .setTitle('**[CHANNEL EDIT]**')
+            .setTitle('تم تعديل  على روم')
             .setThumbnail(userAvatar)
             .setColor('BLUE')
             .setDescription(`**\n**:wrench: Successfully Edited **${channelType}** Channel Topic\n\n**Old Topic:**\n\`\`\`${oldChannel.topic || 'NULL'}\`\`\`\n**New Topic:**\n\`\`\`${newChannel.topic || 'NULL'}\`\`\`\n**Channel:** ${oldChannel} \n**By:** <@${userID}>`)
