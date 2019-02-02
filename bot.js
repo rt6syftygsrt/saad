@@ -645,3 +645,56 @@ if (message.content.startsWith(adminprefix + 'sa')) {
 
 
 
+
+client.on('message', message => { 
+    var prefix = "$";
+    if (message.author.boss) return;
+    if (!message.content.startsWith(prefix)) return;
+    let command = message.content.split(" ")[0];
+    command = command.slice(prefix.length);
+    if (command == "صلاحية") {
+    if (!message.channel.guild) return;
+    if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return message.reply("**🚫انت لا تملك صلاحيات **").then(msg => msg.delete(5000));;
+    if(!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply("البوت لايملك صلاحيات ").then(msg => msg.delete(5000));;
+    let user = message.mentions.users.first();
+    if (message.mentions.users.size < 1) return message.reply('**ضع منشن الشخص!!**').then(msg => {msg.delete(5000)});
+    let MRole = message.content.split(" ").slice(2).join(" ");
+    if(!MRole)return message.reply("يجب عليك وضع اسم الرتبة").then(msg => {msg.delete(5000)});
+    message.guild.member(user).addRole(message.guild.roles.find("name", MRole));
+    message.reply('*** Done ✅  ***').then(msg => {msg.delete(10000)});
+    }
+    });
+
+
+
+
+
+
+client.on('message', message => {
+
+if (message.content.startsWith("$رول")) {
+             if(!message.channel.guild) return message.reply('**Commands in the server**');
+        if (!message.member.hasPermission('MANAGE_ROLES')) return message.reply('? **لاتمتلك صلاحية كافية لعمل رول :rolling_eyes: **');
+        let args = message.content.split(" ").slice(1);
+            message.guild.createRole({
+                name : args.join(' '),
+                color : "RANDOM", 
+                permissions : [1]
+            }).then(function(role){
+                message.addRole(role)
+
+            })
+
+}
+});
+
+
+
+
+
+
+
+
+
+
+
