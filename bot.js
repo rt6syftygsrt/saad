@@ -1145,7 +1145,7 @@ client.on('roleUpdate', (oldRole, newRole) => {
 
 
 
-
+message.guild.members.get(message.member.id).roles.name;
 client.on('message', message => {
     var p = message.mentions.members.first();
     var reason = message.content.split(" ").slice(2).join(' ');
