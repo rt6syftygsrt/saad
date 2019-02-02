@@ -844,7 +844,8 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
         if(oldMember.roles.size < newMember.roles.size) {
             let role = newMember.roles.filter(r => !oldMember.roles.has(r.id)).first();
  
-            let roleAdded = new Discord.RichEmbed()
+           
+            .logChannel.send(roleAdded);
             .setTitle('تم اعطاء رتبه')
             .setThumbnail(oldMember.guild.iconURL)
             .setColor('GREEN')
