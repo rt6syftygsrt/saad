@@ -1009,7 +1009,7 @@ client.on('channelUpdate', (oldChannel, newChannel) => {
  
         if(oldChannel.name !== newChannel.name) {
             let newName = new Discord.RichEmbed()
-            .setTitle('**[CHANNEL EDIT]**')
+            .setTitle('تم تعديل  على روم')
             .setThumbnail(userAvatar)
             .setColor('BLUE')
             .setDescription(`**\n**:wrench: Successfully Edited **${channelType}** Channel Name\n\n**Old Name:** \`\`${oldChannel.name}\`\`\n**New Name:** \`\`${newChannel.name}\`\`\n**Channel ID:** ${oldChannel.id}\n**By:** <@${userID}> (ID: ${userID})`)
@@ -1020,7 +1020,7 @@ client.on('channelUpdate', (oldChannel, newChannel) => {
         }
         if(oldChannel.topic !== newChannel.topic) {
             let newTopic = new Discord.RichEmbed()
-            .setTitle('تم تعديل  على روم')
+            .setTitle('تتتتتتتتتتت')
             .setThumbnail(userAvatar)
             .setColor('BLUE')
             .setDescription(`**\n**:wrench: Successfully Edited **${channelType}** Channel Topic\n\n**Old Topic:**\n\`\`\`${oldChannel.topic || 'NULL'}\`\`\`\n**New Topic:**\n\`\`\`${newChannel.topic || 'NULL'}\`\`\`\n**Channel:** ${oldChannel} \n**By:** <@${userID}>`)
