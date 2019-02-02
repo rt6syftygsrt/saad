@@ -1131,7 +1131,7 @@ client.on('roleUpdate', (oldRole, newRole) => {
         }
         if(oldRole.permissions !== newRole.permissions) {
             let roleUpdate = new Discord.RichEmbed()
-            .setTitle('**[UPDATE ROLE PERMISSIONS]**')
+            .setTitle('تم اضافة صلاحيات رتبه')
             .setThumbnail(userAvatar)
             .setColor('BLUE')
             .setDescription(`**\n**:first_place: Successfully \`\`CHANGED\`\` **${oldRole.name}** Permissions!\n\n**Old Permissions:** \`\`${oldRole.permissions}\`\`\n**New Permissions:** \`\`${newRole.permissions}\`\`\n**By:** <@${userID}> (ID: ${userID})`)
