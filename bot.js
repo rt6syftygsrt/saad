@@ -835,7 +835,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
             .setTitle('**[UPDATE MEMBER NICKNAME]**')
             .setThumbnail(userAvatar)
             .setColor('BLUE')
-            .setDescription(`**\n**:spy: Successfully \`\`CHANGE\`\` Member Nickname.\n\n**User:** ${oldMember} (ID: ${oldMember.id})\n**Old Nickname:** ${oldNM}\n**New Nickname:** ${newNM}\n**By:** <@${userID}> (ID: ${userID})`)
+            .setDescription(`**\n**:spy: Successfully \`\`CHANGE\`\` Member Nickname.\n\n**User:** ${oldMember} \n**Old Nickname:** ${oldNM}\n**New Nickname:** ${newNM}\n**By:** <@${userID}> `)
             .setTimestamp()
             .setFooter(oldMember.guild.name, oldMember.guild.iconURL)
  
@@ -848,7 +848,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
             .setTitle('**[ADDED ROLE TO MEMBER]**')
             .setThumbnail(oldMember.guild.iconURL)
             .setColor('GREEN')
-            .setDescription(`**\n**:white_check_mark: Successfully \`\`ADDED\`\` Role to **${oldMember.user.username}**\n\n**User:** <@${oldMember.id}> (ID: ${oldMember.user.id})\n**Role:** \`\`${role.name}\`\` (ID: ${role.id})\n**By:** <@${userID}> (ID: ${userID})`)
+            .setDescription(`**\n**:white_check_mark: Successfully \`\`ADDED\`\` Role to **${oldMember.user.username}**\n\n**User:** <@${oldMember.id}> \n**Role:** \`\`${role.name}\`\` \n**By:** <@${userID}> `)
             .setTimestamp()
             .setFooter(userTag, userAvatar)
  
@@ -858,10 +858,10 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
             let role = oldMember.roles.filter(r => !newMember.roles.has(r.id)).first();
  
             let roleRemoved = new Discord.RichEmbed()
-            .setTitle('**[REMOVED ROLE FROM MEMBER]**')
+            .setTitle('تم اعطاء رتبه')
             .setThumbnail(oldMember.guild.iconURL)
             .setColor('RED')
-            .setDescription(`**\n**:negative_squared_cross_mark: Successfully \`\`REMOVED\`\` Role from **${oldMember.user.username}**\n\n**User:** <@${oldMember.user.id}> (ID: ${oldMember.id})\n**Role:** \`\`${role.name}\`\` (ID: ${role.id})\n**By:** <@${userID}> (ID: ${userID})`)
+            .setDescription(`**\n**:negative_squared_cross_mark: Successfully \`\`REMOVED\`\` Role from **${oldMember.user.username}**\n\n**User:** <@${oldMember.user.id}>\n**Role:** \`\`${role.name}\`\`\n**By:** <@${userID}> `)
             .setTimestamp()
             .setFooter(userTag, userAvatar)
  
@@ -873,7 +873,7 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
         .setTitle('**[UPDATE GUILD OWNER]**')
         .setThumbnail(oldMember.guild.iconURL)
         .setColor('GREEN')
-        .setDescription(`**\n**:white_check_mark: Successfully \`\`TRANSFER\`\` The Owner Ship.\n\n**Old Owner:** <@${oldMember.user.id}> (ID: ${oldMember.user.id})\n**New Owner:** <@${newMember.user.id}> (ID: ${newMember.user.id})`)
+        .setDescription(`**\n**:white_check_mark: Successfully \`\`TRANSFER\`\` The Owner Ship.\n\n**Old Owner:** <@${oldMember.user.id}> \n**New Owner:** <@${newMember.user.id}> `)
         .setTimestamp()
         .setFooter(oldMember.guild.name, oldMember.guild.iconURL)
  
@@ -888,7 +888,7 @@ client.on('guildMemberAdd', member => {
   .setTitle('**[NEW MEMBER ADDED]**')
   .setThumbnail(member.user.avatarURL)
   .setColor('GREEN')
-  .setDescription(`**\n**:arrow_lower_right: Joined **${member.user.username}** To the server!\n\n**User:** <@${member.user.id}> (ID: ${member.user.id})\n**Days In Discord:** ${Days(member.user.createdAt)}`)
+  .setDescription(`**\n**:arrow_lower_right: Joined **${member.user.username}** To the server!\n\n**User:** <@${member.user.id}> \n**Days In Discord:** ${Days(member.user.createdAt)}`)
   .setTimestamp()
   .setFooter(member.user.tag, member.user.avatarURL)
  
@@ -908,7 +908,7 @@ client.on('guildMemberRemove', member => {
   .setTitle('**[LEAVE MEMBER]**')
   .setThumbnail(member.user.avatarURL)
   .setColor('GREEN')
-  .setDescription(`**\n**:arrow_upper_left: Leave **${member.user.username}** From the server.\n\n**User:** <@${member.user.id}> (ID: ${member.user.id})`)
+  .setDescription(`**\n**:arrow_upper_left: Leave **${member.user.username}** From the server.\n\n**User:** <@${member.user.id}> `)
   .setTimestamp()
   .setFooter(member.user.tag, member.user.avatarURL)
  
@@ -947,7 +947,7 @@ client.on('channelCreate', channel => {
         let channelCreate = new Discord.RichEmbed()
         .setTitle('**[CHANNEL CREATE]**')
         .setThumbnail(userAvatar)
-        .setDescription(`**\n**:white_check_mark: Successfully \`\`CREATE\`\` **${roomType}** channel.\n\n**Channel Name:** \`\`${channel.name}\`\` (ID: ${channel.id})\n**By:** <@${userID}> (ID: ${userID})`)
+        .setDescription(`**\n**:white_check_mark: Successfully \`\`CREATE\`\` **${roomType}** channel.\n\n**Channel Name:** \`\`${channel.name}\`\` \n**By:** <@${userID}> `)
         .setColor('GREEN')
         .setTimestamp()
         .setFooter(channel.guild.name, channel.guild.iconURL)
@@ -980,7 +980,7 @@ client.on('channelDelete', channel => {
         let channelDelete = new Discord.RichEmbed()
         .setTitle('**[CHANNEL DELETE]**')
         .setThumbnail(userAvatar)
-        .setDescription(`**\n**:white_check_mark: Successfully \`\`DELETE\`\` **${roomType}** channel.\n\n**Channel Name:** \`\`${channel.name}\`\` (ID: ${channel.id})\n**By:** <@${userID}> (ID: ${userID})`)
+        .setDescription(`**\n**:white_check_mark: Successfully \`\`DELETE\`\` **${roomType}** channel.\n\n**Channel Name:** \`\`${channel.name}\`\` \n**By:** <@${userID}> `)
         .setColor('RED')
         .setTimestamp()
         .setFooter(channel.guild.name, channel.guild.iconURL)
@@ -1024,7 +1024,7 @@ client.on('channelUpdate', (oldChannel, newChannel) => {
             .setTitle('**[CHANNEL EDIT]**')
             .setThumbnail(userAvatar)
             .setColor('BLUE')
-            .setDescription(`**\n**:wrench: Successfully Edited **${channelType}** Channel Topic\n\n**Old Topic:**\n\`\`\`${oldChannel.topic || 'NULL'}\`\`\`\n**New Topic:**\n\`\`\`${newChannel.topic || 'NULL'}\`\`\`\n**Channel:** ${oldChannel} (ID: ${oldChannel.id})\n**By:** <@${userID}> (ID: ${userID})`)
+            .setDescription(`**\n**:wrench: Successfully Edited **${channelType}** Channel Topic\n\n**Old Topic:**\n\`\`\`${oldChannel.topic || 'NULL'}\`\`\`\n**New Topic:**\n\`\`\`${newChannel.topic || 'NULL'}\`\`\`\n**Channel:** ${oldChannel} \n**By:** <@${userID}>`)
             .setTimestamp()
             .setFooter(oldChannel.guild.name, oldChannel.guild.iconURL)
  
