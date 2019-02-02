@@ -1143,43 +1143,107 @@ client.on('roleUpdate', (oldRole, newRole) => {
 });
  
 
-
-
-message.guild.members.get(message.member.id).roles.name;
+const sWlc = require('./welc.json');
 client.on('message', message => {
-    var p = message.mentions.members.first();
-    var reason = message.content.split(" ").slice(2).join(' ');
-    var log = message.guild.channels.find('name', 'log');
-    if(message.content.startsWith(`${prefix}ban`)){
-        if(!p) return message.reply(`**Mention the user!**`);
-        if(!reason) return message.reply(`**Spofic a reason!**`);
-        if(!p.bannable) return message.reply(`**I can't ban a staff member!**`);
-        reason = reason.replace('0', "**نشر في الخاص**");
-        reason = reason.replace('1', "**اسم غير لائق**");
-        reason = reason.replace('2', "**صوره غير لائقه**");
-        reason = reason.replace('3', "**سب الاهل**");
-        reason = reason.replace('4', "**سب الذات الاهيه**");
-        reason = reason.replace('5', "**مخالفه القوانين مع اخذ اكثر من تحذير**");
-        reason = reason.replace('6', "**سبام في الشات**");
-        reason = reason.replace('7', "**استخدام بعض الاوامر بشكل مسبب للإضرار بالسيرفر**");
-        reason = reason.replace('8', "**جلب اعضاء مفبركين للسيرفر**");
-        reason = reason.replace('9', "**عنصريه**");
-        var embed = new Discord.RichEmbed()
-        .setAuthor(`User Banned!`)
-        .addField(`Name ♣`, `<@${p.id}>`)
-        .addField(`By ♣`, `<@${message.author.id}>`)
-        .addField(`Reason ♣`, reason)
-        .setTimestamp()
-        .setColor("BLACK")
-        .setFooter(` `)
-        p.ban();
-            message.delete();
-        log.send({embed});
-    }
+var prefix = "#";
+    let newChannel = message.content.split(' ').slice(1).join(" ")
+
+if(message.channel.type === "dm") return;
+if(message.author.bot) return;
+  if(!sWlc[message.guild.id]) sWlc[message.guild.id] = {
+    channel: newChannel
+}
+  fs.writeFile("./welc.json", JSON.stringify(sWlc, null, 2), (err) => {
+      if(err) console.log(err)
+    });
+const channel = sWlc[message.guild.id].channel
+  if (message.content.startsWith(prefix + "setwelcomer")) {
+    if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
+    let newChannel = message.content.split(' ').slice(1).join(" ")
+    if(!newChannel) return message.reply(`**${prefix}setwelcomer <channel name>**`)
+    sWlc[message.guild.id].channel = newChannel
+    
+    message.channel.send(`**${message.guild.name}'s channel has been changed to ${newChannel}**`);
+  }
 });
+client.on("guildMemberAdd", member => {
+      if(!sWlc[member.guild.id]) sWlc[member.guild.id] = {
+    channel: ""
+  }
+  const channel = sWlc[member.guild.id].channel
+    const sChannel = sWlc[member.guild.id].channel
+    let welcomer = member.guild.channels.find('name', sChannel);
+    let memberavatar = member.user.avatarURL
+      if (!welcomer) return;
+      if(welcomer) {
+         moment.locale('ar-ly');
+         var h = member.user;
+        let heroo = new Discord.RichEmbed()
+        .setColor('RANDOM')
+        .setThumbnail(h.avatarURL)
+        .setAuthor(h.username,h.avatarURL)
+        .addField(': تاريخ دخولك الدسكورد',`${moment(member.user.createdAt).format('D/M/YYYY h:mm a')} **\n** \`${moment(member.user.createdAt).fromNow()}\``,true)            
+         .addField(': تاريخ دخولك السيرفر',`${moment(member.joinedAt).format('D/M/YYYY h:mm a ')} \n\`\`${moment(member.joinedAt).startOf(' ').fromNow()}\`\``, true)      
+         .setFooter(`${h.tag}`,"https://images-ext-2.discordapp.net/external/JpyzxW2wMRG2874gSTdNTpC_q9AHl8x8V4SMmtRtlVk/https/orcid.org/sites/default/files/files/ID_symbol_B-W_128x128.gif")
+     welcomer.send({embed:heroo});          
+         
+      var Canvas = require('canvas')
+      var jimp = require('jimp')
+     const w = ['swlc.png'];
 
 
+              let Image = Canvas.Image,
+                  canvas = new Canvas(557, 241),
+                  ctx = canvas.getContext('2d');
+  
+              fs.readFile(`${w[Math.floor(Math.random() * w.length)]}`, function (err, Background) {
+                  if (err) return console.log(err)
+                  let BG = Canvas.Image;
+                  let ground = new Image;
+                  ground.src = Background;
+                  ctx.drawImage(ground, 0, 0, 557, 241);
+      
+      })
+      
+                      let url = member.user.displayAvatarURL.endsWith(".webp") ? member.user.displayAvatarURL.slice(5, -20) + ".gif" : member.user.displayAvatarURL;
+                      jimp.read(url, (err, ava) => {
+                          if (err) return console.log(err);
+                          ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
+                              if (err) return console.log(err);
+      
+                                    ctx.font = '30px Arial Bold';
+                              ctx.fontSize = '20px';
+                              ctx.fillStyle = "#FFFFFF";
+                                ctx.fillText(member.user.username, 245, 150);
+                              
+                              //NAMEً
+                              ctx.font = '30px Arial';
+                              ctx.fontSize = '28px';
+                              ctx.fillStyle = "#FFFFFF";
+      ctx.fillText(`welcome to server`, 245, 80);
+    
+NEW MESSAGES
+ᴶᴺ | USFToday at 8:17 PM
+                              //AVATARً
+                              let Avatar = Canvas.Image;
+                              let ava = new Avatar;
+                              ava.src = buf;
+                              ctx.beginPath();
+                 ctx.arc(120.8, 120.5, 112.3, 0, Math.PI*2, true);
+                   ctx.closePath();
+                   
+                                 ctx.clip();
 
+                        ctx.drawImage(ava, 7, 8, 227, 225);
+                              ctx.closePath();
 
-
-
+                            
+    welcomer.sendFile(canvas.toBuffer())
+      
+      
+      
+      })
+      })
+      
+      }
+      });
