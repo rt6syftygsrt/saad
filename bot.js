@@ -844,15 +844,14 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
         if(oldMember.roles.size < newMember.roles.size) {
             let role = newMember.roles.filter(r => !oldMember.roles.has(r.id)).first();
  
-           
-            .logChannel.send(roleAdded);
+           let roleAdded = new Discord.RichEmbed()
             .setTitle('تم اعطاء رتبه')
             .setThumbnail(oldMember.guild.iconURL)
             .setColor('GREEN')
             .setDescription(`**\n**:white_check_mark: Successfully \`\`ADDED\`\` Role to **${oldMember.user.username}**\n\n**User:** <@${oldMember.id}> \n**Role:** \`\`${role.name}\`\` \n**By:** <@${userID}> `)
             .setTimestamp()
             .setFooter(userTag, userAvatar)
- 
+ logChannel.send(roleAdded);
             
         }
         if(oldMember.roles.size > newMember.roles.size) {
