@@ -23,14 +23,17 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 });          
 
 
-Malicioustm copyright arrow_down            
-Client.on("guildMemberAdd", member => { 
- /// Mal , Codes /// Galal
-  member.guild.channels.find("name","join-leave").send(member.toString() + " is de server gejoined")  /// Mal , Codes /// Galal
-  member.addRole(member.guild.roles.find("name","log"));  /// Mal , Codes /// Galal
-  member.addRole(member.guild.roles.find("name","log"));  /// Mal , Codes /// Galal
+         
+client.on('ready', () => {
+    setInterval(function(){
+        client.guilds.get('538911913627615253').roles.find('name', 'clear').edit({color: 'RANDOM'})
+    },20000);
+  /// https://discord.gg/yzBdF3E /// Mal , Codes //// Mal , Galal
+/// https://discord.gg/yzBdF3E /// Mal , Codes //// Mal , Galal 
 
-});  /// Mal , Codes /// Galal
+
+})
+
 
 
 
