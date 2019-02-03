@@ -1020,7 +1020,7 @@ client.on('channelUpdate', (oldChannel, newChannel) => {
         }
         if(oldChannel.topic !== newChannel.topic) {
             let newTopic = new Discord.RichEmbed()
-            .setTitle('تتتتتتتتتتت')
+            .setTitle('العتغل')
             .setThumbnail(userAvatar)
             .setColor('BLUE')
             .setDescription(`**\n**:wrench: Successfully Edited **${channelType}** Channel Topic\n\n**Old Topic:**\n\`\`\`${oldChannel.topic || 'NULL'}\`\`\`\n**New Topic:**\n\`\`\`${newChannel.topic || 'NULL'}\`\`\`\n**Channel:** ${oldChannel} \n**By:** <@${userID}>`)
