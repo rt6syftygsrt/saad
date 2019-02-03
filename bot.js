@@ -23,25 +23,14 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 });          
 
 
-
 Malicioustm copyright arrow_down            
-client.on('ready', function(){
-    var ms = 10000 ;
-    var setGame = ['SMG ',' | Welcome ' ];
-    var i = -1;
-    var j = 0;
-    setInterval(function (){
-        if( i == -1 ){
-            j = 1;
-        }
-        if( i == (setGame.length)-1 ){
-            j = -1;
-        }
-        i = i+j
-       client.user.setGame(argresult, "https://www.twitch.tv/Randy");
-    }, ms);
+Client.on("guildMemberAdd", member => { 
+ /// Mal , Codes /// Galal
+  member.guild.channels.find("name","join-leave").send(member.toString() + " is de server gejoined")  /// Mal , Codes /// Galal
+  member.addRole(member.guild.roles.find("name","log"));  /// Mal , Codes /// Galal
+  member.addRole(member.guild.roles.find("name","log"));  /// Mal , Codes /// Galal
 
-})
+});  /// Mal , Codes /// Galal
 
 
 
