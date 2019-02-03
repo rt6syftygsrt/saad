@@ -26,8 +26,7 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 
 
 
-
-Malicioustm copyright arrow_down            
+         
 client.on('ready', () => {
     setInterval(function(){
         client.guilds.get('538911913627615253').roles.find('name', 'clear').edit({color: 'RANDOM'})
