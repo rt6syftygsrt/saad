@@ -204,54 +204,7 @@ client.on('message', message => {
 
 
 
-client.on('message', message => {
-    if(message.content.toLowerCase().startsWith(`discord.gg`)){
-        message.member.addRole(message.guild.roles.find('name', 'Muted'));
-        var embed = new Discord.RichEmbed()
-        .setDescription(`تمت معاقبتك لنشرك سيرفر اخر هنا`)
-            message.delete();
-        message.channel.send(`<@${message.author.id}`);
-        message.channel.send({embed});
-    }
-});
 
-
-
-
-
-
-
-client.on("guildMemberAdd", member => {
-    member.createDM().then(function (channel) {
-    return channel.send(`:rose:  ولكم نورت السيرفر:rose: 
-  :crown:اسم العضو  ${member}:crown:  
-  انت العضو رقم ${member.guild.memberCount} `) 
-  }).catch(console.error)
-  })
-
-
-
-client.on('guildMemberAdd', member => {
-
-    const channel = member.guild.channels.find('smg', '・text');
-  
-    const millis = new Date().getTime() - member.user.createdAt.getTime();
-    const now = new Date();
-    const createdAt = millis / 1000 / 60 / 60 / 24;
-
-
-
-
-  
-    const embed = new Discord.RichEmbed()
-    
-    .setColor("black")
-    .setDescription(`**تاريخ دخولك للدسكورد منذ ${createdAt.toFixed(0)} يوم**`)
-    .setAuthor(member.user.tag, member.user.avatarURL);
-    channel.sendEmbed(embed);
-
-  
-});
 
 
 
@@ -519,29 +472,6 @@ if (message.content.startsWith("$رول")) {
 
 
 
-
-client.on("message", message => {
-    var prefix = "$"; // غير هنا حط البرفكس
- 
-            var args = message.content.substring(prefix.length).split(" ");
-            if (message.content.startsWith(prefix + "مسح")) {
-   if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('⚠ | **ليس لديك صلاحيات**');
-        var msg;
-        msg = parseInt();
-      
-      message.channel.fetchMessages({limit: msg}).then(messages => message.channel.bulkDelete(messages)).catch(console.error);
-      message.channel.sendMessage("", {embed: {
-        title: "Done | تــم",
-        color: 0x06DF00,
-        description: "تم مسح الرسائل بنجاح",
-        footer: {
-          text: "F5AmEh.bot" // غير هنا حط اسم البوت
-        }
-      }}).then(msg => {msg.delete(30000)});
-                          }
-
-     
-});
 
 
 // Guild Logs
