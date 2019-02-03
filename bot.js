@@ -38,7 +38,7 @@ client.on('ready', function(){
             j = -1;
         }
         i = i+j
-        client.user.setGame(setGame[i],`https://www.twitch.tv/حب بلا حدود`);
+       client.user.setGame(argresult, "https://www.twitch.tv/Randy");
     }, ms);
 
 })
