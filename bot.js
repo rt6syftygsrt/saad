@@ -762,7 +762,7 @@ client.on('guildMemberAdd', member => {
   if(!logChannel) return;
  
   let newMember = new Discord.RichEmbed()
-  .setTitle('**[NEW MEMBER ADDED]**')
+  .setTitle('دخول عضو جديد')
   .setThumbnail(member.user.avatarURL)
   .setColor('GREEN')
   .setDescription(`**\n**:arrow_lower_right: Joined **${member.user.username}** To the server!\n\n**User:** <@${member.user.id}> \n**Days In Discord:** ${Days(member.user.createdAt)}`)
@@ -782,7 +782,7 @@ client.on('guildMemberRemove', member => {
   if(!logChannel) return;
  
   let leaveMember = new Discord.RichEmbed()
-  .setTitle('تم تبنيد العضو')
+  .setTitle('خرج عضو من السيرفر')
   .setThumbnail(member.user.avatarURL)
   .setColor('GREEN')
   .setDescription(`**\n**:arrow_upper_left: Leave **${member.user.username}** From the server.\n\n**User:** <@${member.user.id}> `)
@@ -898,7 +898,7 @@ client.on('channelUpdate', (oldChannel, newChannel) => {
         }
         if(oldChannel.topic !== newChannel.topic) {
             let newTopic = new Discord.RichEmbed()
-            .setTitle('العتغل')
+            .setTitle('تم تعديل على روم')
             .setThumbnail(userAvatar)
             .setColor('BLUE')
             .setDescription(`**\n**:wrench: Successfully Edited **${channelType}** Channel Topic\n\n**Old Topic:**\n\`\`\`${oldChannel.topic || 'NULL'}\`\`\`\n**New Topic:**\n\`\`\`${newChannel.topic || 'NULL'}\`\`\`\n**Channel:** ${oldChannel} \n**By:** <@${userID}>`)
