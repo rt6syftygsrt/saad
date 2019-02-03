@@ -26,22 +26,13 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 
 
 
-
-
-
-
-
-
-
-
-
 const ms = require ( "ms" ) ;
 client. on( "message" , message => {
 if( ! message. channel . guild ) return;
 if ( message. author . bot ) return ;
 let command = message. content . split ( " " )[ 0 ] ;
 if ( message. content . split ( " " )
-[ 0 ] . toLowerCase () === prefix + "تكلم" )
+[ 0 ] . toLowerCase () === prefix + "unmute" )
 {
 if ( ! message. member. hasPermission
 ( 'MANAGE_ROLES' )) return ;
@@ -82,7 +73,7 @@ let muteMember = message. mentions. members . first () ;
 let muteReason = messageArray [ 2 ] ;
 let muteDuration = messageArray [ 3 ] ;
 if ( message. content . split ( " " )
-[ 0 ] . toLowerCase () === prefix + "اسكت" ) {
+[ 0 ] . toLowerCase () === prefix + "mute" ) {
 if ( message. author . bot ) return ;
 if( ! muteRole) return message. guild . createRole({ name:
 'Muted' }) . then
@@ -114,6 +105,26 @@ muteMember. setMute ( false )
 }) ;
 
 
+
+
+
+
+
+const Discord = require("discord.js");
+
+module.exports.run = async (bot, message, args) => {
+
+  if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("Nope, you don't have the permission on this server!.");
+  if(!args[0]) return message.channel.send("no");
+  message.channel.bulkDelete(args[0]).then(() => {
+  message.channel.send(`Clear ${args[0]} messages.`).then(msg => msg.delete(2000));
+});
+
+}
+
+module.exports.help = {
+  name: "g!clear"
+}
 
 
 
