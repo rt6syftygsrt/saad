@@ -26,7 +26,7 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 
 
 
-Toxic Codescopyright arrow_down
+
 client.on('message', message => {
     var prefix = "#";
   if (message.author.x5bz) return;
