@@ -556,10 +556,10 @@ client.on('guildBanAdd', (guild, user) => {
         if(userID === client.user.id) return;
  
         let banInfo = new Discord.RichEmbed()
-        .setTitle('**[BANNED]**')
+        .setTitle('لقد بند')
         .setThumbnail(userAvatar)
         .setColor('DARK_RED')
-        .setDescription(`**\n**:airplane: Successfully \`\`BANNED\`\` **${user.username}** From the server!\n\n**User:** <@${user.id}> (ID: ${user.id})\n**By:** <@${userID}> (ID: ${userID})`)
+        .setDescription(`**\n**:airplane: Successfully \`\`BANNED\`\` **${user.username}** From the server!\n\n**User:** <@${user.id}> \n**By:** <@${userID}> `)
         .setTimestamp()
         .setFooter(guild.name, guild.iconURL)
  
@@ -578,10 +578,10 @@ client.on('guildBanRemove', (guild, user) => {
         var userAvatar = logs.entries.first().executor.avatarURL;
  
         let unBanInfo = new Discord.RichEmbed()
-        .setTitle('**[UNBANNED]**')
+        .setTitle('تم فك الباند')
         .setThumbnail(userAvatar)
         .setColor('GREEN')
-        .setDescription(`**\n**:unlock: Successfully \`\`UNBANNED\`\` **${user.username}** From the server\n\n**User:** <@${user.id}> (ID: ${user.id})\n**By:** <@${userID}> (ID: ${userID})`)
+        .setDescription(`**\n**:unlock: Successfully \`\`UNBANNED\`\` **${user.username}** From the server\n\n**User:** <@${user.id}> \n**By:** <@${userID}> `)
         .setTimestamp()
         .setFooter(guild.name, guild.iconURL)
  
@@ -762,7 +762,7 @@ client.on('guildMemberRemove', member => {
   if(!logChannel) return;
  
   let leaveMember = new Discord.RichEmbed()
-  .setTitle('**[LEAVE MEMBER]**')
+  .setTitle('تم تبنيد العضو')
   .setThumbnail(member.user.avatarURL)
   .setColor('GREEN')
   .setDescription(`**\n**:arrow_upper_left: Leave **${member.user.username}** From the server.\n\n**User:** <@${member.user.id}> `)
