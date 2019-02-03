@@ -35,12 +35,11 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 
 
 
-
 client.on('message', message =>{
     if(message.author.bot) return;
-    if(!message.content == ('مسح'))
+    if(!message.content == ('>clear'))
 if(!true) return;
-    if(message.content.split(' ')[0] == ('مسح')){
+    if(message.content.split(' ')[0] == ('>clear')){
     var lmt = message.content.split(' ')[1]
     ,  hang = 0
     ,  max  = 0;
@@ -62,7 +61,6 @@ if(!true) return;
         message.channel.fetchMessages({limite:hang}).then(msgs=>{
         message.channel.bulkDelete(msgs);
      });
-
 
 
 
