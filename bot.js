@@ -32,37 +32,14 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 
 
 
+client.on('message', msg => {
+  const DiscordLink = [".net", ".tk", ".com"];///!                  Mal,SizGooo ツ
+  if( DiscordLink.some(word => msg.content.includes(word)) ) {
+    msg.reply(`**حبي ممنوع نشر اي روابط😂 **`)
+    msg.delete();///!                  Mal,SizGooo ツ
 
-
-
-client.on('message', message =>{
-    if(message.author.bot) return;
-    if(!message.content == ('>clear'))
-if(!true) return;
-    if(message.content.split(' ')[0] == ('>clear')){
-    var lmt = message.content.split(' ')[1]
-    ,  hang = 0
-    ,  max  = 0;
-    
-    if(!lmt) lmt = 200;
-    if(typeof lmt !== 'number') return;
-    if(lmt > 100){
-        for(;lmt > 100;){
-        lmt--;
-        hang++;
-        }
-        }
-     message.channel.fetchMessages({limite:lmt}).then(msgs=>{
-     msgs.channel.bulkDelete(msgs);
-     });
-     if(hang > 100){
-         hang = 100;
-     }
-        message.channel.fetchMessages({limite:hang}).then(msgs=>{
-        message.channel.bulkDelete(msgs);
-     });
-
-
+}
+})///!                  Mal,SizGooo ツ
 
 
 
