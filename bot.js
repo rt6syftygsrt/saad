@@ -27,7 +27,10 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 
 
 
-
+client.on('guildMemberAdd', member => {
+var role = member.guild.roles.find('name', 'SMG');
+member.addRole(role)
+});
 
 
 
