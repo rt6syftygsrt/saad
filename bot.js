@@ -28,6 +28,43 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 
 
 
+
+
+
+
+client.on('message',  async  message  =>  {
+  let  user  =  message.mentions.users.first();
+  let  reason  =  message.content.split(' ').slice(2).join(' ');
+if(message.content.startsWith(prefix  +  'تحذير'))  {
+  message.delete(); /// Mal , Codes /// Galal
+  if(!message.member.hasPermission('MUTE_MEMBERS')) return      message.channel.send('**للأسف لا تمتلك صلاحيات' );
+  if(!user)  return  message.channel.send("**  -  mention  a  member  **")/// Mal , Codes /// Galal
+  if(!reason)  return  message.channel.send("**  -  Type  Reason  **")//// Mal , Codes /// Galal
+  let  reportembed  =  new  Discord.RichEmbed()
+  .setTitle(`**New  Warned User !**`)
+.addField("**-  Warned  User:**",  `[${user}  with  ID  ${user.id}]`)//by  OrochiX
+.addField('**-  Warned  By:**',`[${message.author.tag} with id ${message.author.id}]`)/// Mal , Codes /// Galal
+.addField('**-  Reason:**',  `[${reason}]`,  true)
+.addField("**-  Warned  in:**",`[${message.channel.name}]`) /// Mal , Codes /// Galal 
+.addField("**-  Time & Date:**",`[${message.createdAt}]`) /// Mal , Codes /// Galal
+.setFooter("Probot")
+.setColor('#060c37')
+let incidentchannel = message.guild.channels.find(`name`, "log"); /// Mal , Codes /// Galal 
+if(!incidentchannel) return message.channel.send("Can't find warns channel."); /// Mal , Codes /// Galal
+incidentchannel.send(reportembed);
+message.reply(`**:warning: ${user} has been warned !:warning:**`).then(msg  =>  msg.delete(3000));
+user.send(`**:warning: You are has been warned in ${message.guild.name} reason: ${reason} :warning:**`) /// Mal , Codes /// Galal
+}
+
+/// Mal , Codes /// Galal
+
+})
+
+
+
+
+
+
 client.on("message", message => {
   let men = message.mentions.users.first();
   if(message.content.startsWith( "اطرد")) {
