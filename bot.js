@@ -28,30 +28,24 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 
 
 
-
 client.on('message', message => {
-   let embed = new Discord.RichEmbed()
+    if (message.content.startsWith("رابط")) {
 
-    let args = message.content.split(' ').slice(1).join(' ');
-     if(!message.channel.guild) return;
-if(message.content.split(' ')[0] == '*bc') {
-         message.react("✔️")
-          let embed = new Discord.RichEmbed()
-    .setColor("#FF00FF")
-    .setThumbnail(message.author.avatarURL)   
-                                      .addField('تم الارسال بواسطة :', "<@" + message.author.id + ">")
-                 message.channel.sendEmbed(embed);
-        message.guild.members.forEach(m => {
-            var bc = new Discord.RichEmbed()
-.addField('**● Sender  :**', `*** → ${message.author.username}#${message.author.discriminator}***`)
-            .addField('***● Server  :***', `*** → ${message.guild.name}***`)               
-    .setColor('#ff0000')
-                 .addField('ّ', args)
-            m.send(``,{embed: bc});
-        });
+  message.channel.createInvite({
+        thing: true,
+        maxUses: 100,
+        maxAge: 86400
+    }).then(invite =>
+      message.author.sendMessage(invite.url)
+    )
+  message.channel.send("**تم ارسال الرابط برسالة خاصة**")
+
+message.author.send(`**مدة الرابط : يـوم
+عدد استخدامات الرابط : 100**`)
+
+
     }
-})
-
+});
 
 
 client.on('message' , message => {
