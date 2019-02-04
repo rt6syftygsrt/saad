@@ -25,7 +25,14 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 
 
 
+client.on('message', msg => {
+  const DiscordLink = [".net", ".tk", ".com"];///!                  Mal,SizGooo ツ
+  if( DiscordLink.some(word => msg.content.includes(word)) ) {
+    msg.reply(`**حبي ممنوع نشر اي روابط😂 **`)
+    msg.delete();///!                  Mal,SizGooo ツ
 
+}
+})///!                  Mal,SizGooo ツ
 
 
 
