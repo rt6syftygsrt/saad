@@ -26,39 +26,30 @@ client.user.setGame(`$help|welcome`,'https://www.twitch.tv/tarikrs');           
 
 
 
-
 client.on('message', message => {
-    var prefix = "+";
-if(!message.channel.guild) return;
-if(message.content.startsWith(prefix + 'سحب')) {
- if (message.member.hasPermission("MOVE_MEMBERS")) {
- if (message.mentions.users.size === 0) {
- return message.channel.send("``لاستخدام الأمر اكتب هذه الأمر : " +prefix+ "move [منشن العضو المراد سحبه]``")
-}
-if (message.member.voiceChannel != null) {
- if (message.mentions.members.first().voiceChannel != null) {
- var authorchannel = message.member.voiceChannelID;
- var usermentioned = message.mentions.members.first().id;
-var embed = new Discord.RichEmbed()
- .setTitle("Succes!")
- .setColor("#000000")
- .setDescription(`لقد قمت بسحب <@${usermentioned}> الى الروم الصوتي الخاص بك✅`)
-var embed = new Discord.RichEmbed()
-.setTitle(`You are Moved in ${message.guild.name}`)
- .setColor("RANDOM")
-.setDescription(`**<@${message.author.id}> Moved You To His Channel!\nServer --> ${message.guild.name}**`)
- message.guild.members.get(usermentioned).setVoiceChannel(authorchannel).then(m => message.channel.send(embed))
-message.guild.members.get(usermentioned).send(embed)
-} else {
-message.channel.send("``لا يمكنك سحب العضو``"+ message.mentions.members.first() +" `العضو المراد سحبه ليس في أي روم صوتي`")
-}
-} else {
- message.channel.send("**``عليك ان تكون في روم صوتي لكي تقوم بسحب العضو أليك``**")
-}
-} else {
-message.react("❌")
- }}});
+    if (message.content.startsWith("رابط")) {
+        message.channel.createInvite({
+        thing: true,
+        maxUses: 1,
+        maxAge: 3600,
+    }).then(invite =>
+      message.author.sendMessage(invite.url)
+    )
+    const embed = new Discord.RichEmbed()
+        .setColor("RANDOM")
+          .setDescription("تم أرسال الرابط برسالة خاصة")
+           .setAuthor(client.user.username, client.user.avatarURL)
+                 .setAuthor(client.user.username, client.user.avatarURL)
+                .setFooter('طلب بواسطة: ' + message.author.tag)
 
+      message.channel.sendEmbed(embed).then(message => {message.delete(10000)})
+              const Embed11 = new Discord.RichEmbed()
+        .setColor("RANDOM")
+        
+    .setDescription("** مدة الرابط : ساعه | عدد استخدامات الرابط : 1 **")
+      message.author.sendEmbed(Embed11)
+    }
+});
 
 
 
